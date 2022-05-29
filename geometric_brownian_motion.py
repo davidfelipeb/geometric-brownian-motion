@@ -1,10 +1,10 @@
 from simulation_class import *
-
+from auxiliary_functions import *
 import numpy as np
 
 class geometric_brownian_motion(simulation_class):
     def __init__(self, name, market_env, corr = False):
-        super().__init__(name, market_env, corr)
+        super(geometric_brownian_motion, self).__init__(name, market_env, corr)
     
     def update(self, initial_value = None, volatility = None, final_date = None):
         if initial_value is not None:
@@ -25,24 +25,19 @@ class geometric_brownian_motion(simulation_class):
         paths[0] = self.initial_value
 
         if not self.correlated:
-            if fixed_seed:
-                rng = np.random.default_rng(123)
-                rand = rng.standard_normal((1,M,J))
-            else:
-                rng = np.random.default_rng()
-                rand = rng.standard_normal((1,M,J))
+            rand = sn_random_numbers((1,M,J), fixed_seed = fixed_seed)
 
         else:
             rand = self.random_numbers
         
         short_rate = self.discount_curve.short_rate
         
-        for t in range(len(self.time_grid)):
+        for t in range(1, len(self.time_series)):
             if not self.correlated:
-                rand = rand[t]
+                ran = rand[t]
             else:
                 ran = np.dot(self.cholesky_matrix, rand[:, t, :])
-                rand = self[self.rn_set]
+                ran = ran[self.rn_set]
             dt = (self.time_series[t] - self.time_series[t-1]).days/day_count
             paths[t] = paths[t-1] * np.exp((short_rate - 0.5*self.volatility**2) + self.volatility * np.sqrt(dt) * ran)
         

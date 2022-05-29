@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import datetime as dt
 
 class simulation_class(object):
 
@@ -40,7 +41,7 @@ class simulation_class(object):
         end   = self.final_date
 
         time_series = pd.date_range(start = start, end = end, freq = self.frequency)
-        time_series = list(time_series)
+        time_series = [t.to_pydatetime() for t in time_series]
 
         if start not in time_series:
             time_series.insert(0, start)

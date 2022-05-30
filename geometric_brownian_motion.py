@@ -14,6 +14,8 @@ class geometric_brownian_motion(simulation_class):
         if final_date is not None:
             self.final_date = final_date
 
+        self.instrument_values = None
+
     def generate_paths(self, fixed_seed = False, day_count = 365):
         if self.time_series is None:
             self.generate_time_series()
@@ -38,7 +40,8 @@ class geometric_brownian_motion(simulation_class):
             else:
                 ran = np.dot(self.cholesky_matrix, rand[:, t, :])
                 ran = ran[self.rn_set]
+
             dt = (self.time_series[t] - self.time_series[t-1]).days/day_count
-            paths[t] = paths[t-1] * np.exp((short_rate - 0.5*self.volatility**2) + self.volatility * np.sqrt(dt) * ran)
+            paths[t] = paths[t-1] * np.exp((short_rate - 0.5*self.volatility**2) * dt + self.volatility * np.sqrt(dt) * ran)
         
         self.instrument_values = paths

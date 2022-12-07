@@ -4,10 +4,13 @@ model the pricing of finantial instruments. In particular, we model index
 pricing using a Black-Scholes-Merton setup with constant volatility. 
 The future index level can be described by the following random variable:
 $$S_T = S_0 \exp{\left[ T(r-\frac{1}{2}\sigma^2) + \sigma \sqrt{T} z\right]}$$
-which defines the index label at time $T$, $S_T$, as a function of the constant riskless short rate $r$ and the constant volatility $\sigma$. The variable $z$ is normally distributed.  
+which defines the index label at time $T$, $S_T$, given the inicial price at $T=0$, $T_0$, and as a function of the constant riskless short rate $r$ and the constant volatility $\sigma$. The variable $z$ is normally distributed.  
 Some results are shown in the following Figures, for both low and high volatility values, as wells as a comparison between the two set of paths to better appreciate their differences in scale:
 ![GMB low volatility.](outputs/test_low.png)
 ![GMB high volatility.](outputs/test_high.png)
 ![GMB low and high volatility.](outputs/test_lowhigh.png)
+Slides in .pdf format are included in the repository for further reference. 
 
+**Future Developments**:
+- Model a jump-diffusion scheme with time-varying volatility
 

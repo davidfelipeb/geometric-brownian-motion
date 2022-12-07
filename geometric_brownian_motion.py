@@ -7,6 +7,14 @@ class geometric_brownian_motion(simulation_class):
         super(geometric_brownian_motion, self).__init__(name, market_env, corr)
     
     def update(self, initial_value = None, volatility = None, final_date = None):
+        """
+        It updates the attributes of the object
+        
+        Args:
+          initial_value: The initial value of the instrument.
+          volatility: The annualized volatility of the underlying asset.
+          final_date: The date at which the simulation ends.
+        """
         if initial_value is not None:
             self.initial_value = initial_value
         if volatility is not None:
@@ -17,23 +25,37 @@ class geometric_brownian_motion(simulation_class):
         self.instrument_values = None
 
     def generate_paths(self, fixed_seed = False, day_count = 365):
+        """
+        The function generates a matrix of simulated stock prices, where each row
+        represents a time step and each column represents a simulated path
+        
+        Args:
+          fixed_seed: Boolean. If True, the random numbers are generated using a fixed
+        seed. Defaults to False
+          day_count: The number of days in a year. Defaults to 365
+        """
+
+        # Checking if the time series is empty. If it is, it generates a time series.
         if self.time_series is None:
             self.generate_time_series()
 
+        # M is the number of time steps and J is the number of paths.
         M = len(self.time_series)
         J = self.paths
 
+        # Creating a matrix of zeros with M rows and J columns. Then it is setting the
+        # first row to the initial value.
         paths = np.zeros((M,J))
         paths[0] = self.initial_value
 
         if not self.correlated:
             rand = sn_random_numbers((1,M,J), fixed_seed = fixed_seed)
-
         else:
             rand = self.random_numbers
         
         short_rate = self.discount_curve.short_rate
         
+        # Black-Scholes-Merton implementation
         for t in range(1, len(self.time_series)):
             if not self.correlated:
                 ran = rand[t]

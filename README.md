@@ -9,6 +9,7 @@ Some results are shown in the following Figures, for both low and high volatilit
 ![GMB low volatility.](outputs/test_low.png)
 ![GMB high volatility.](outputs/test_high.png)
 ![GMB low and high volatility.](outputs/test_lowhigh.png)
+
 Slides in .pdf format are included in the repository for further reference. 
 
 **Future Developments**:

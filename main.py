@@ -47,7 +47,6 @@ def main():
     fig.savefig('outputs/test_low.png')
 
     fig, ax = plt.subplots()
-    #p1 = ax.plot(gbm.time_series, paths_1[:,:20], ls = '-', lw = 1, color = 'blue')
     p2 = ax.plot(gbm.time_series, paths_2[:,:20], ls = '-', lw = 1)
     ax.legend([p2[0]], [f"High Volatility ({vol2})"], loc = 'upper left')
     ax.set_xlabel(r'$\mathrm{Time}$', fontsize = 14)
